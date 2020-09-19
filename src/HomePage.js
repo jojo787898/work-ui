@@ -51,14 +51,7 @@ export default class HomePage extends React.Component {
         )
     }
 
-    renderItemDetail() {
-        <div>
-            
-        </div>
-    }
-
     render() {
-
         return (
             <form className="homePage" style={{backgroundColor:"white"}}>
 
@@ -82,7 +75,6 @@ export default class HomePage extends React.Component {
                 </Table>
             </TableContainer>
             </form>
-            
         );
     }
 
