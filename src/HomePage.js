@@ -1,47 +1,45 @@
 import React from 'react';
-import { Paper, makeStyles } from '@material-ui/core';
-import {
-    TextField,
-    InputLabel,
-    FormControl,
-    Select,
-    Button,
-    createMuiTheme,
-    IconButton,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Grid,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow
-  } from "@material-ui/core";
-  import { ThemeProvider as MuiThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
-  import AddIcon from "@material-ui/icons/Add";
-  import SearchBar from "material-ui-search-bar";
-  import { getWork } from "./api/report";
-  import moment from 'moment';
+import { getWork } from "./api/report";
+import Paper from "@material-ui/core"
 
-  export default class homePage extends React.Component{
+export default class HomePage extends React.Component {
 
     constructor(props) {
         super(props);
-    
+        this.state={};
     }
 
-    async componentDidMount(){
-        await this.getWork();
+    componentDidMount(){
+        this.getWork();
     }
-
+  
     async getWork() {
         let schedule = await getWork();
-        console.log(schedule)
-     }
+        this.setState({schedule});
+    }
 
-  }
+    renderSchedule() {
+        const {schedule} = this.state
+        if (schedule) {
+            console.log(schedule)
+            return (
+                schedule.map(work => this.renderWork(work))
+            );
+        }
+    }
+
+    renderWork(work) {
+        return (
+            <h1>{work.workOrder}</h1>
+        )
+    }
+
+    render() {
+        return (
+            <Paper>
+                {this.renderSchedule()}
+            </Paper>
+        );
+    }
+
+}
