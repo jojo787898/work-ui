@@ -9,12 +9,8 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Paper>
-          <Button component={Link} to="/">
-            Home
-          </Button>
-        </Paper>
-        <Route path="/" Component={HomePage}/>
+
+        <Route path="/" component={HomePage}/>
       </Router>
     );
   }

@@ -36,9 +36,8 @@ export default class HomePage extends React.Component {
 
     render() {
         return (
-            <Paper>
-                {this.renderSchedule()}
-            </Paper>
+
+                <h1> {this.renderSchedule()} </h1>
         );
     }
 
