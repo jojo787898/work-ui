@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import imageHero from './images/hero.png';
+import { getWork } from "./api/report";
 
 export default class App extends Component {
   constructor(props) {
@@ -14,7 +15,14 @@ export default class App extends Component {
    * Component Did Mount
    */
 
-  async componentDidMount() {}
+  componentDidMount(){
+      this.getWork();
+  }
+
+  async getWork() {
+      let schedule = await getWork();
+      console.log(schedule)
+  }
 
   /**
    * Save Vote
