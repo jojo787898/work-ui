@@ -23,7 +23,7 @@ export default class Insert extends React.Component {
     handleSubmit = async (event) => {
         var {facility, equipmentId, priority, timeComplete, schedule, equipment} = this.state;
         let newWork = {
-            workOrder : schedule[schedule.length].workOrder,
+            workOrder : schedule.length,
             facility : facility,
             equipment : equipment,
             equipmentId : equipmentId,
