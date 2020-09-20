@@ -177,14 +177,29 @@ export default class HomePage extends React.Component {
                 <TableCell align="right"> {work.priority}</TableCell>
                 <TableCell align="right"> {work.timeComplete} </TableCell>
                 <TableCell align="right"> {work.submission} </TableCell>
-                <TableCell align="right"> {work.technician ? work.technician :
+                <TableCell align="right"> {work.technician ? 
+                <Button onClick={this.handleClickWorker(work.workOrder)}> 
+                    {work.technician}
+                </Button> :
                     <Button onClick={this.handleClickAssign(work.workOrder)}>
                         Assign
                     </Button>
                 }
                 </TableCell>
+                <TableCell align="right"> {work.status}</TableCell>
             </TableRow>
         )
+    }
+
+    handleClickWorker = (workOrder) => async (event) => {
+        this.props.history.push({
+            pathname: "/workerPage",
+            state: {
+                schedule: this.state.schedule,
+                technician: this.state.schedule[workOrder].technician,
+                technicians: this.state.technicians
+            },
+        });
     }
 
     handleClickAssign = (workOrder) => (event) => {
@@ -226,6 +241,7 @@ export default class HomePage extends React.Component {
                             <TableCell align="right"> Time to Complete </TableCell>
                             <TableCell align="right"> Submission Timestamp </TableCell>
                             <TableCell align="right"> Technician</TableCell>
+                            <TableCell align="right"> Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

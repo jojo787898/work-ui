@@ -46,8 +46,27 @@ export default class WorkerPage extends React.Component {
                     </Select>
                 }
                 </TableCell>
+                <TableCell align="right"> {work.status}</TableCell>
+                <TableCell align="right"> 
+                    <Button onClick={this.handleComplete(work.workOrder)}>
+                        Complete
+                    </Button>
+                </TableCell>
             </TableRow>
         )
+    }
+
+    handleComplete = (workOrder) => async (event) => {
+        var {schedule} = this.state;
+        schedule[workOrder].status = "Completed"
+        this.setState({schedule})
+
+        this.props.history.push({
+            pathname: "/",
+            state: {
+                schedule: schedule
+            },
+        });
     }
 
     handleClick = async (event) => {
@@ -55,6 +74,7 @@ export default class WorkerPage extends React.Component {
             pathname: "/",
             state: {
                 schedule: this.state.schedule ,
+                technicians: this.state.technicians
             },
         });
     }
@@ -85,6 +105,7 @@ export default class WorkerPage extends React.Component {
                             <TableCell align="right"> Time to Complete </TableCell>
                             <TableCell align="right"> Submission Timestamp </TableCell>
                             <TableCell align="right"> Technician</TableCell>
+                            <TableCell align="right"> Status</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
