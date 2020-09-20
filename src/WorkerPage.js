@@ -15,54 +15,14 @@ import {
     TextField
 } from "@material-ui/core"
 
-export default class HomePage extends React.Component {
+export default class WorkerPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state= {
-            schedule: !props.location.state ? [
-                {
-                workOrder : 0,
-                facility : "Fac1",
-                equipment: "Pump",
-                equipmentId : "P000",
-                priority : 1,
-                submission : "2020-11-21",
-                timeComplete : 4,
-                status : "open",
-                },
-                {
-                workOrder : 1,
-                facility : "Fac1",
-                equipment : "Conveyor",
-                equipmentId : "P000",
-                priority : 1,
-                submission : "2020-11-21",
-                timeComplete : 4,
-                status : "open",
-                },
-            ] : props.location.state.schedule,
-            Technicians : [
-                {
-                    name : "Bob",
-                    equipment :"Pump"
-                },
-                {
-                    name : "Sam",
-                    equipment : "Conveyor"
-                }
-            ]
-        } 
-    }
-
-    renderSchedule() {
-        const {schedule} = this.state
-        if (schedule) {
-            console.log(schedule)
-            return (
-                schedule.map(work => this.renderWork(work))
-            );
-        }
+        this.state={
+            schedule: props.location.state.schedule,
+            technician: props.location.state.technician
+        };
     }
 
     renderWork(work) {
@@ -89,40 +49,30 @@ export default class HomePage extends React.Component {
         )
     }
 
-    handleChange = (workOrder) => (event) => {
-        var {schedule} = this.state;
-        schedule[workOrder].technician = event.target.value
-        this.setState({schedule})
-
-        this.props.history.push({
-            pathname: "/workerPage",
-            state: {
-                schedule: schedule,
-                technician: schedule[workOrder].technician
-            },
-        });
-    }
-
-    renderTechnician(tech, equipment) {
-        if (tech.equipment == equipment) {
-            return (
-                <MenuItem value={tech.name}>{tech.name}</MenuItem>
-            );
-        }
-    }
-
     handleClick = async (event) => {
         this.props.history.push({
-            pathname: "/insert",
+            pathname: "/",
             state: {
                 schedule: this.state.schedule ,
             },
         });
     }
 
+    renderSchedule() {
+        const {schedule} = this.state
+        if (schedule) {
+            console.log(schedule)
+            return (
+                schedule.map(work => work.technician == this.state.technician ? 
+                    this.renderWork(work) : null)
+            );
+        }
+    }
+
     render() {
-        return (
-            <form className="homePage" style={{backgroundColor:"white"}}>
+
+        return(
+            <form className="workerPage" style={{backgroundColor:"white"}}>
             <TableContainer component={Paper}>
                 <Table>
                     <TableHead>
@@ -142,11 +92,11 @@ export default class HomePage extends React.Component {
                     </TableBody>
                 </Table>
             </TableContainer>
+
             <Button onClick={this.handleClick}>
-                Add
+                Back
             </Button>
             </form>
         );
     }
-
 }
