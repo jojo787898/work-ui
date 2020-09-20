@@ -1,12 +1,13 @@
 import React from 'react'
 import { Grid, Paper, TextField } from "@material-ui/core";
-import { putWork } from "./api/report";
 
 export default class Insert extends React.Component {
     constructor(props) {
         super(props);
         this.state={
+            schedule: props.location.state.schedule,
             facility:"",
+            equipment:"",
             equipmentId:"",
             priority:0,
             timeComplete:0,
@@ -18,9 +19,24 @@ export default class Insert extends React.Component {
     }
 
     handleSubmit = async (event) => {
-        const {facility, equipmentId, priority, timeComplete} = this.state;
-        let response = await putWork(facility, equipmentId, priority, timeComplete);
-        console.log(response);
+        var {facility, equipmentId, priority, timeComplete, schedule, equipment} = this.state;
+        let newWork = {
+            workOrder : 0,
+            facility : facility,
+            equipment : equipment,
+            equipmentId : equipmentId,
+            priority : priority,
+            submission : "22-11-2020",
+            timeComplete : timeComplete,
+            status : "open",
+        }
+        schedule.push(newWork);
+        this.props.history.push({
+            pathname: "/",
+            state: {
+                schedule: schedule,
+            },
+        });
     }
 
     render() {
@@ -34,6 +50,16 @@ export default class Insert extends React.Component {
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("facility")}
+                    />
+                </Grid>
+                <Grid>
+                    <TextField
+                    required
+                    id="Equipment"
+                    label="Equipment"
+                    InputProps={{ disableUnderline: false }}
+                    InputLabelProps={{ shrink: true }}
+                    onChange={this.handleChange("equipment")}
                     />
                 </Grid>
                 <Grid>

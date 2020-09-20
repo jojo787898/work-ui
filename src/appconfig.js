@@ -1,7 +1,7 @@
 const environment = process.env.NODE_ENV;
 
 const devEndpoints = {
-    workUrl: "http://localhost:5001/api"
+    workUrl: "http://344cc594f4e0.ngrok.io/api"
 };
 
 const endpointConfig = environment === "prod" ? prodEndpoints : devEndpoints;

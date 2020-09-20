@@ -10,9 +10,6 @@ export default class App extends Component {
   render() {
     return (
       <Router>
-        <Button component={Link} to="/insert">
-          Add
-        </Button>
         <Route exact path="/" component={HomePage}/>
         <Route path="/insert" component={Insert}/>
       </Router>

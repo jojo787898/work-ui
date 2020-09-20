@@ -7,8 +7,12 @@ const PUT_WORK = "/insert";
 
 export const getWork = async () => {
     let url = new URL(API_ADDRESS + GET_WORK);
+    let header = new Headers();
+    header.append("Access-Control-Allow-Origin", "*");
 
-    let response = await fetch(url)
+    let response = await fetch(url, {
+        headers : header
+    })
 
     if(response.ok) {
         let result = await response.json();
