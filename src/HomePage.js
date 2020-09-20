@@ -12,7 +12,8 @@ import {
     Button,
     Select,
     MenuItem,
-    TextField
+    TextField,
+    FormControl
 } from "@material-ui/core"
 
 export default class HomePage extends React.Component {
@@ -42,7 +43,7 @@ export default class HomePage extends React.Component {
                 status : "open",
                 },
             ] : props.location.state.schedule,
-            Technicians : [
+            technicians : [
                 {
                     name : "Bob",
                     equipment :"Pump"
@@ -58,7 +59,6 @@ export default class HomePage extends React.Component {
     renderSchedule() {
         const {schedule} = this.state
         if (schedule) {
-            console.log(schedule)
             return (
                 schedule.map(work => this.renderWork(work))
             );
@@ -76,40 +76,27 @@ export default class HomePage extends React.Component {
                 <TableCell align="right"> {work.timeComplete} </TableCell>
                 <TableCell align="right"> {work.submission} </TableCell>
                 <TableCell align="right"> {work.technician ? work.technician :
-                    <Select
-                    id="select-technician"
-                    value=""
-                    onChange={this.handleChange(work.workOrder)}
-                    >
-                    {this.state.Technicians.map(tech => this.renderTechnician(tech, work.equipment))}
-                    </Select>
+                    <Button onClick={this.handleClickAssign(work.workOrder)}>
+                        Assign
+                    </Button>
                 }
                 </TableCell>
             </TableRow>
         )
     }
 
-    handleChange = (workOrder) => (event) => {
-        var {schedule} = this.state;
-        schedule[workOrder].technician = event.target.value
-        this.setState({schedule})
-
+    handleClickAssign = (workOrder) => (event) => {
+        const {technicians, schedule} = this.state
         this.props.history.push({
-            pathname: "/workerPage",
+            pathname: "/assign",
             state: {
+                workOrder : workOrder,
                 schedule: schedule,
-                technician: schedule[workOrder].technician
+                technicians: technicians 
             },
         });
     }
 
-    renderTechnician(tech, equipment) {
-        if (tech.equipment == equipment) {
-            return (
-                <MenuItem value={tech.name}>{tech.name}</MenuItem>
-            );
-        }
-    }
 
     handleClick = async (event) => {
         this.props.history.push({

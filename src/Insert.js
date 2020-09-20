@@ -1,5 +1,6 @@
 import React from 'react'
 import { Grid, Paper, TextField } from "@material-ui/core";
+import moment from "moment"
 
 export default class Insert extends React.Component {
     constructor(props) {
@@ -21,12 +22,12 @@ export default class Insert extends React.Component {
     handleSubmit = async (event) => {
         var {facility, equipmentId, priority, timeComplete, schedule, equipment} = this.state;
         let newWork = {
-            workOrder : 0,
+            workOrder : schedule[schedule.length].workOrder,
             facility : facility,
             equipment : equipment,
             equipmentId : equipmentId,
             priority : priority,
-            submission : "22-11-2020",
+            submission : moment().format("YYYY-MM-DD"),
             timeComplete : timeComplete,
             status : "open",
         }
