@@ -27,7 +27,7 @@ export default class Assign extends React.Component {
     }
 
     renderTechnician(tech, equipment) {
-        if (tech.equipment.toLowerCase() == equipment.toLowerCase()) {
+        if (tech.equipment.includes(equipment.toLowerCase())) {
             return (
                 <MenuItem value={tech.name}>{tech.name}</MenuItem>
             );
@@ -35,16 +35,33 @@ export default class Assign extends React.Component {
     }
     
     handleClick = async (event) => {
-        var {schedule, workOrder} = this.state
-        schedule[workOrder].technician = this.state.techAssign
-        this.setState({schedule}) 
-        this.props.history.push({
-            pathname: "/workerPage",
-            state: {
-                schedule: schedule,
-                technician: schedule[workOrder].technician
-            },
-        });
+        var {schedule, workOrder, technicians} = this.state
+        var techIndex;
+        technicians.map(tech => tech.name == this.state.techAssign ? 
+            techIndex = technicians.indexOf(tech) : null);
+        if (technicians[techIndex].hourStart + schedule[workOrder].timeComplete <= technicians[techIndex].hourEnd) {
+            technicians[techIndex].hourStart += schedule[workOrder].timeComplete
+            schedule[workOrder].technician = this.state.techAssign
+            schedule[workOrder].status = "on going"
+            this.setState({schedule, technicians}) 
+            this.props.history.push({
+                pathname: "/workerPage",
+                state: {
+                    schedule: schedule,
+                    technician: schedule[workOrder].technician,
+                    technicians: technicians
+                },
+            });
+        } else {
+            this.props.history.push({
+                pathname: "/",
+                state: {
+                    schedule: schedule,
+                    technicians: technicians
+                },
+            });   
+        }
+        
     }
     
     render() {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, TextField } from "@material-ui/core";
+import { Grid, Paper, TextField, InputLabel } from "@material-ui/core";
 import moment from "moment"
 
 export default class Insert extends React.Component {
@@ -12,6 +12,7 @@ export default class Insert extends React.Component {
             equipmentId:"",
             priority:0,
             timeComplete:0,
+            technicians : props.location.state.technicians
         };
     }
 
@@ -36,58 +37,59 @@ export default class Insert extends React.Component {
             pathname: "/",
             state: {
                 schedule: schedule,
+                technicians: this.state.technicians
             },
         });
     }
 
     render() {
         return (
-            <Paper>
+            <Paper >
                 <Grid>
+                    <InputLabel style={{fontSize:"150%"}}>Facility</InputLabel>
                     <TextField
                     required
                     id="facility"
-                    label="Facility"
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("facility")}
                     />
                 </Grid>
                 <Grid>
+                    <InputLabel style={{fontSize:"150%"}}>Equipment</InputLabel>
                     <TextField
                     required
-                    id="Equipment"
-                    label="Equipment"
+                    id="equipment"
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("equipment")}
                     />
                 </Grid>
                 <Grid>
+                    <InputLabel style={{fontSize:"150%"}}>Equipment Id</InputLabel>
                     <TextField
                     required
                     id="EquipmentId"
-                    label="Equipment Id"
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("equipmentId")}
                     />
                 </Grid>
                 <Grid>
+                    <InputLabel style={{fontSize:"150%"}}>Priority</InputLabel>
                     <TextField
                     required
-                    id="Priority"
-                    label="Priority"
+                    id="priority"
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("priority")}
                     />
                 </Grid>
                 <Grid>
+                    <InputLabel style={{fontSize:"150%"}}>Time to Complete</InputLabel>
                     <TextField
                     required
                     id="timeComplete"
-                    label="Time to Complete"
                     InputProps={{ disableUnderline: false }}
                     InputLabelProps={{ shrink: true }}
                     onChange={this.handleChange("timeComplete")}

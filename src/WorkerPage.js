@@ -21,7 +21,8 @@ export default class WorkerPage extends React.Component {
         super(props);
         this.state={
             schedule: props.location.state.schedule,
-            technician: props.location.state.technician
+            technician: props.location.state.technician,
+            technicians: props.location.state.technicians
         };
     }
 
@@ -61,7 +62,6 @@ export default class WorkerPage extends React.Component {
     renderSchedule() {
         const {schedule} = this.state
         if (schedule) {
-            console.log(schedule)
             return (
                 schedule.map(work => work.technician == this.state.technician ? 
                     this.renderWork(work) : null)
@@ -70,7 +70,7 @@ export default class WorkerPage extends React.Component {
     }
 
     render() {
-
+        console.log(this.state.technicians)
         return(
             <form className="workerPage" style={{backgroundColor:"white"}}>
             <TableContainer component={Paper}>
